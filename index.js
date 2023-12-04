@@ -26,15 +26,12 @@ app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-//get url input from body/ html when buttom is clicked
-// to acces body, we need body parser passed as 2nd param
-//then call back
 
-//create an empt object for to send responses
+
+//create an empt object to send responses
 const responseObject = {};
 
-//create a tracker that increment
-//by 1 anytime the same url is entered
+
 
 //to redirect to original url, we need to capture the id param
 //then use it to redirect to original url
@@ -43,11 +40,9 @@ app.get("/api/shorturl/:shorturl", (req, res) => {
 
   //find the doc in db where inputracker match the id
   UrlDoc.findOne({ inputTracker: id }).then((result) => {
-    //find the original url from doc then redirct to that url
-
+  
     if (result) {
       let original = result.originalUrl;
-
       res.redirect(original);
     } else {
       res.json({ message: "The url  does not exist" });
@@ -68,6 +63,7 @@ app.post(
       if (!address) {
         res.json({ error: "invalid url" });
       } else {
+        
         responseObject["original_url"] = urlObject.href;
 
         //check that the url already exist in db
@@ -108,62 +104,7 @@ app.post(
       }
     });
 
-    // responseObject["inputTracker"] = urlTracker;
-
-    // UrlDoc.findOne({ originalUrl: Url })
-    //   .then((result) => {
-    //     //  console.log("r", result.originalUrl);
-    //     if (result.originalUrl == Url) {
-    //       urlTracker = urlTracker + 1;
-    //       // console.log("tracker ", urlTracker);
-    //       updater(urlTracker);
-    //     }
-    //   })
-    //   .catch((e) => console.log(e));
-    // console.log("urltracker ", urlTracker);
-    // // assign the url to responseObject
-
-    // const updater = (num) => {
-    //   let filter = { originalUrl: Url };
-    //   let updated = { originalUrl: Url, inputTracker: num };
-    //   let option = { returnOriginal: false };
-    //   UrlDoc.findOneAndUpdate(filter, updated, option);
-    // };
-
-    //res.json(responseObject);
-
-    //Populate our model with info from user
-    //sort in descending order the ulr model so that
-    //we can update the tracker anytime the same url is entered
-
-    // res.json({ greading: "hello node js" });
-
-    // UrlDoc.findOne({ originalUrl: Url })
-
-    //   .sort({ inputTracker: "desc" })
-    //   .exec()
-    //   .then((er, result) => {
-    //     if (!er && result != undefined) {
-    //       urlTracker = result.inputracker + 1;
-    //     }
-
-    //     if (!er) {
-    //       UrlDoc.findOneAndUpdate(filter, updated, option).then((e, data) => {
-    //         if (!e) {
-    //           console.log(responseObject);
-    //           responseObject["inputTracker"] = data.inputTracker;
-
-    //           console.log("up", responseObject);
-    //           res.json(responseObject);
-    //         }
-    //       });
-    //     }
-    //   });
-
-    // UrlDoc.findOneAndUpdate(filter, updated, option).then((e, r) => {
-    //   if (!e) console.log("r", r);
-    // });
-  }
+    
 );
 
 mongoose
